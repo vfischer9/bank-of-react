@@ -6,6 +6,7 @@ import axios from 'axios';
 import AccountBalance from './AccountBalance';
 import Debits from './Debits';
 import Credits from './Credits';
+import moneyGirl from './moneyGirl.png';
 
 class CreditsProfile extends Component {
     constructor(props){
@@ -35,7 +36,7 @@ class CreditsProfile extends Component {
             [event.target.name]: event.target.value
         });
     }
-    handleAdd = (event) => {
+    handleAdd = () => {
         this.state.CreditsData.unshift({
             "description": this.state.CreditDescription,
             "amount": this.state.CreditAmount,
@@ -46,29 +47,76 @@ class CreditsProfile extends Component {
   render() {
     return (
         <div>
-          <h1>Credits Profile</h1>
-          <Link to="/">Home</Link>
-          <AccountBalance accountBalance={this.props.accountCredits-this.props.accountDebits+Number(this.state.CreditAmount)}/>
-          <Debits accountDebits={this.props.accountDebits}/>
-          <Credits accountCredits={this.props.accountCredits+Number(this.state.CreditAmount)}/>
-          <div><button onClick={this.onClick}>Show Credits History</button></div>
-          <p>Credit Description: <input type="text" name="CreditDescription" onChange={this.handleChange}></input></p>
-          <p>Credit Amount: <input type="number" name="CreditAmount" onChange={this.handleChange}></input></p>
-          <p>Credit Date: <input type="datetime-local" name="CreditDate" onChange={this.handleChange}></input></p>
-            <button onClick={this.handleAdd}>Add Credit</button>
-          {this.state.CreditsData.map(data => {
-              return (
-              <div>
-                  <ul>
-                      <li>Description: {data.description}</li>
-                      <li>Amount: {data.amount}</li>
-                      <li>Date: {data.date}</li>
-                  </ul>
-              </div>
-                    )
-                }
-             )
-          }
+         <div className='container'>
+            <h1>Credits Page</h1>
+          </div>
+
+          <br></br>
+
+          <div className='containDebitPage'>
+          <img className='moneyGirl' src={moneyGirl} alt='money'></img>
+            <br></br>
+            <Link to="/" className='link'>Home</Link>
+            <br></br><br></br>
+            <AccountBalance 
+              accountBalance={this.props.accountCredits-this.props.accountDebits+Number(this.state.CreditAmount)}
+            />
+
+            <Debits 
+            accountDebits={this.props.accountDebits}
+            />
+
+            <Credits 
+            accountCredits={this.props.accountCredits+Number(this.state.CreditAmount)}
+            />
+
+              <br></br>
+
+            <div>
+                <button onClick={this.onClick}>Show/Refresh Credits History</button>
+          </div>
+
+            <p>Credit Description: 
+                <input 
+                type="text" 
+                name="CreditDescription" 
+                onChange={this.handleChange}
+                ></input>
+              </p>
+
+            <p>Credit Amount: 
+                <input 
+                type="number" 
+                name="CreditAmount" 
+                onChange={this.handleChange}
+                ></input>
+              </p>
+
+            <p>Credit Date: 
+                <input
+                type="datetime-local" 
+                name="CreditDate" 
+                onChange={this.handleChange}
+                ></input>
+              </p>
+
+              <button onClick={this.handleAdd}>Add Credit</button>
+
+            {this.state.CreditsData.map(data => {
+                return (
+                <div>
+                    <ul>
+                        <p>Description: <i>{data.description}</i></p>
+                        <p>Amount: <i>{data.amount}</i></p>
+                        <p>Date: <i>{data.date}</i></p>
+                        <br></br>
+                    </ul>
+                </div>
+                      )
+                  }
+              )
+            }
+          </div>
         </div>
     );
   }

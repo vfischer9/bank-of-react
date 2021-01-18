@@ -36,17 +36,23 @@ class Login extends Component {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label htmlFor="userName">User Name</label>
-            <input type="text" name="userName" onChange={this.handleChange} value={this.state.user.userName} />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" />
-          </div>
-          <button>Log In</button>
-        </form>
+        <br></br>
+        <div className='containUserPage'>
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <br></br>
+              <label htmlFor="userName">Username:</label>
+              <input type="text" name="userName" onChange={this.handleChange} value={this.state.user.userName} />
+            </div>
+            <br></br>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input type="password" name="password" />
+            </div>
+            <br></br>
+            <button>Log In</button>
+          </form>
+        </div>
       </div>
     )
   }

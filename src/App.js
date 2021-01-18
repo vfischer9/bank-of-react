@@ -8,16 +8,16 @@ import CreditsList from './CreditsList';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
+      accountBalance: "",
+      accountDebits: 500,
+      accountCredits: 1000,
       currentUser: {
-        userName: 'vfisch',
+        userName: 'victoria',
         memberSince: '01/18/2021',
-        accountBalance: 23,
-        accountDebits: 1000,
-        accountCredits: 500
       }
     }
   }
@@ -38,7 +38,7 @@ class App extends Component {
     
     const HomeComponent = () => (
     <Home 
-      accountBalance={this.state.accountBalance}
+      accountBalance={this.state.accountCredits - this.state.accountDebits}
       accountDebits={this.state.accountDebits}
       accountCredits={this.state.accountCredits}
     />);
