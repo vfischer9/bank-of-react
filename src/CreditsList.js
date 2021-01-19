@@ -8,7 +8,7 @@ import Debits from './Debits';
 import Credits from './Credits';
 import moneyGirl from './moneyGirl.png';
 
-class CreditsProfile extends Component {
+class CreditsList extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -16,7 +16,8 @@ class CreditsProfile extends Component {
             CreditDescription:"",
             CreditAmount: this.props.CreditAmount,
             CreditDate:"",
-            AddedOnce: false
+            AddedOnce: false,
+            accountCredits: this.props.accountCredits
         };
     }
 
@@ -30,12 +31,13 @@ class CreditsProfile extends Component {
         ).catch((err) => console.log("error is: "+err));
     }
 
-    handleChange = event => {
+    handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
             accountBalance: ((this.props.accountCredits+Number(this.state.CreditAmount))-(this.props.accountDebits))
         });
-    }
+        console.log('balance:', this.state.accountBalance)
+      }
 
     handleAdd = () => {
         this.state.CreditsData.unshift({
@@ -43,9 +45,13 @@ class CreditsProfile extends Component {
             "amount": this.state.CreditAmount,
             "date": this.state.CreditDate
         })
+        this.setState({
+          accountCredits: this.props.accountCredits+Number(this.state.CreditAmount)
+        })
     }
 
   render() {
+
     return (
         <div>
          <div className='container'>
@@ -57,7 +63,15 @@ class CreditsProfile extends Component {
           <div className='containDebitPage'>
           <img className='moneyGirl' src={moneyGirl} alt='money'></img>
             <br></br>
-            <Link to="/" className='link'>Home</Link>
+            <Link to="/">Home</Link>
+            
+            <Link
+              to={{
+                pathname: "/credits",
+                accountCredits: this.props.accountCredits // your data array of objects
+              }}
+            ></Link>
+            
             <br></br><br></br>
             <AccountBalance 
               accountBalance={'$' + ((this.props.accountCredits+Number(this.state.CreditAmount))-(this.props.accountDebits))}
@@ -70,6 +84,10 @@ class CreditsProfile extends Component {
             <Credits 
             accountCredits={'$' + (this.props.accountCredits+Number(this.state.CreditAmount))}
             />
+
+            {
+              console.log('credits', this.props.accountCredits+Number(this.state.CreditAmount))
+            }
 
               <br></br>
 
@@ -123,4 +141,4 @@ class CreditsProfile extends Component {
   }
 }
 
-export default CreditsProfile;
+export default CreditsList;

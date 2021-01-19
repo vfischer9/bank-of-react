@@ -6,7 +6,6 @@ import axios from 'axios';
 import AccountBalance from './AccountBalance';
 import Debits from './Debits';
 import Credits from './Credits';
-import Home from './Home';
 import './styles/debits.css'
 import money from './money.png';
 

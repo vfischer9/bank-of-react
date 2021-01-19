@@ -5,16 +5,17 @@ import UserProfile from './UserProfile';
 import Login from './Login';
 import DebitsList from './DebitsList';
 import CreditsList from './CreditsList';
+import AccountBalance from './AccountBalance';
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       accountBalance: 0,
-      accountDebits: 4210.77,
-      accountCredits: 14568.27,
+      accountDebits: 800,
+      accountCredits: 1050,
       CreditAmount: 0,
       DebitAmount: 0,
       currentUser: {
@@ -42,17 +43,19 @@ class App extends Component {
   render() {
 
     const LoginComponent = () => (
-    <Login 
-      user={this.state.currentUser} 
-      mockLogIn={this.mockLogIn} {...this.props}
-    />)
-    
+      <Login 
+        user={this.state.currentUser} 
+        mockLogIn={this.mockLogIn} {...this.props}
+      />
+    );
+
     const HomeComponent = () => (
-    <Home 
-      accountBalance={this.state.accountCredits - this.state.accountDebits}
-      accountDebits={this.state.accountDebits}
-      accountCredits={this.state.accountCredits}
-    />);
+      <Home 
+        accountBalance={this.state.accountCredits - this.state.accountDebits}
+        accountDebits={this.state.accountDebits}
+        accountCredits={this.state.accountCredits}
+      />
+    );
 
     const UserProfileComponent = () => (
         <UserProfile 

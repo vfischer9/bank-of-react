@@ -6,9 +6,16 @@ import {Link} from 'react-router-dom';
 import Debits from './Debits';
 import Credits from './Credits';
 import piggyBank from './piggybank.gif';
+import CreditsList from './CreditsList'
 
 class Home extends Component {
 
+  constructor(props){
+    super(props)
+    this.state={
+      accountBalance: this.props.accountBalance
+    }
+  }
     
   render() {
     return (
@@ -23,10 +30,11 @@ class Home extends Component {
               <br></br>
               <Link to="/userProfile">User Profile</Link>
               <br></br>
-              <Link to="/debitsList"><Debits accountDebits= {'$' + this.props.accountDebits}/></Link>
-              <Link to="/creditsList"><Credits accountCredits={'$' + this.props.accountCredits}/></Link>
+              <Link to="/debitsList">Debits Page - ${this.props.accountDebits}</Link>
               <br></br>
-              <AccountBalance accountBalance={'$' + this.props.accountBalance}/>
+              <Link to="/creditsList">Credits Page - $ {this.props.accountCredits}</Link>
+              <br></br>
+              <AccountBalance accountBalance={this.state.accountBalance}/>
               <br></br>
               <img className='logo' src={piggyBank} alt='bank'></img>
            </div>
