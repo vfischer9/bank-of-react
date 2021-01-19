@@ -5,7 +5,6 @@ import AccountBalance from './AccountBalance';
 import {Link} from 'react-router-dom';
 import Debits from './Debits';
 import Credits from './Credits';
-import logo from './bank.png';
 import piggyBank from './piggybank.gif';
 
 class Home extends Component {
@@ -24,10 +23,10 @@ class Home extends Component {
               <br></br>
               <Link to="/userProfile">User Profile</Link>
               <br></br>
-              <Link to="/debitsList"><Debits accountDebits={this.props.accountDebits}/></Link>
-              <Link to="/creditsList"><Credits accountCredits={this.props.accountCredits}/></Link>
+              <Link to="/debitsList"><Debits accountDebits= {'$' + this.props.accountDebits}/></Link>
+              <Link to="/creditsList"><Credits accountCredits={'$' + this.props.accountCredits}/></Link>
               <br></br>
-              <AccountBalance accountBalance={this.props.accountBalance}/>
+              <AccountBalance accountBalance={'$' + this.props.accountBalance}/>
               <br></br>
               <img className='logo' src={piggyBank} alt='bank'></img>
            </div>

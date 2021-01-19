@@ -6,6 +6,7 @@ import axios from 'axios';
 import AccountBalance from './AccountBalance';
 import Debits from './Debits';
 import Credits from './Credits';
+import Home from './Home';
 import './styles/debits.css'
 import money from './money.png';
 
@@ -18,6 +19,7 @@ class DebitsList extends Component {
             DebitAmount: 0,
             DebitDate:"",
             AddedOnce: false,
+            accountBalance: this.props.accountBalance
         };
     }
 
@@ -25,13 +27,11 @@ debitHistoryOnClick = (event) => {
     event.preventDefault();
     axios.get("https://moj-api.herokuapp.com/debits")
     .then((response) => {
-        console.log(response.data)
         if(this.state.AddedOnce===false){
             this.setState({
                 DebitsData: response.data
             })
         }
-        console.log(this.state.DebitsData)
         this.setState({
             AddedOnce: true
         })
@@ -65,9 +65,10 @@ handleAdd = () => {
                 <br></br>
                 <Link to="/" className='link'>Home</Link>
                 <br></br><br></br>
-                <AccountBalance accountBalance={this.props.accountCredits-this.props.accountDebits+Number(this.state.DebitAmount)}/>
-                <Debits accountDebits={this.props.accountDebits+Number(this.state.DebitAmount)}/>
-                <Credits accountCredits={this.props.accountCredits}/>
+                <AccountBalance accountBalance={'$' + (this.props.accountCredits-(this.props.accountDebits+Number(this.state.DebitAmount)))}/>
+                <Debits accountDebits={'$' + (this.props.accountDebits+Number(this.state.DebitAmount))}/>
+                <Credits accountCredits={'$' + this.props.accountCredits}/>
+              
                 <br></br>
                 <div>
                     <button onClick={this.debitHistoryOnClick}>Show/Refresh Debits History</button>
@@ -106,7 +107,7 @@ handleAdd = () => {
                         
                         <ul>
                             <p>Description: <i>{data.description}</i></p>
-                            <p>Amount: <i>{data.amount}</i></p>
+                            <p>Amount: <i>{'$' + data.amount}</i></p>
                             <p>Date: <i>{data.date}</i></p>
                             <br></br>
                         </ul>

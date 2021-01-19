@@ -14,9 +14,9 @@ class CreditsProfile extends Component {
         this.state={
             CreditsData: [],
             CreditDescription:"",
-            CreditAmount: 0,
+            CreditAmount: this.props.CreditAmount,
             CreditDate:"",
-            AddedOnce: false,
+            AddedOnce: false
         };
     }
 
@@ -24,26 +24,27 @@ class CreditsProfile extends Component {
         event.preventDefault();
         axios.get("https://moj-api.herokuapp.com/credits")
         .then((response) => {
-            console.log("the response data: "+response.data)
             if(this.state.AddedOnce===false){this.setState({CreditsData: response.data})}
-            console.log("our state data: "+this.state.CreditsData)
             this.setState({AddedOnce: true})
             }
         ).catch((err) => console.log("error is: "+err));
     }
+
     handleChange = event => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            accountBalance: ((this.props.accountCredits+Number(this.state.CreditAmount))-(this.props.accountDebits))
         });
     }
+
     handleAdd = () => {
         this.state.CreditsData.unshift({
             "description": this.state.CreditDescription,
             "amount": this.state.CreditAmount,
             "date": this.state.CreditDate
         })
-        console.log(this.state.CreditsData)
     }
+
   render() {
     return (
         <div>
@@ -59,15 +60,15 @@ class CreditsProfile extends Component {
             <Link to="/" className='link'>Home</Link>
             <br></br><br></br>
             <AccountBalance 
-              accountBalance={this.props.accountCredits-this.props.accountDebits+Number(this.state.CreditAmount)}
+              accountBalance={'$' + ((this.props.accountCredits+Number(this.state.CreditAmount))-(this.props.accountDebits))}
             />
 
             <Debits 
-            accountDebits={this.props.accountDebits}
+            accountDebits={'$' + this.props.accountDebits}
             />
 
             <Credits 
-            accountCredits={this.props.accountCredits+Number(this.state.CreditAmount)}
+            accountCredits={'$' + (this.props.accountCredits+Number(this.state.CreditAmount))}
             />
 
               <br></br>
@@ -107,7 +108,7 @@ class CreditsProfile extends Component {
                 <div>
                     <ul>
                         <p>Description: <i>{data.description}</i></p>
-                        <p>Amount: <i>{data.amount}</i></p>
+                        <p>Amount: <i>{'$' + data.amount}</i></p>
                         <p>Date: <i>{data.date}</i></p>
                         <br></br>
                     </ul>

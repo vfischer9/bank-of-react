@@ -12,9 +12,11 @@ class App extends Component {
     super();
 
     this.state = {
-      accountBalance: "",
-      accountDebits: 500,
-      accountCredits: 1000,
+      accountBalance: 0,
+      accountDebits: 4210.77,
+      accountCredits: 14568.27,
+      CreditAmount: 0,
+      DebitAmount: 0,
       currentUser: {
         userName: 'victoria',
         memberSince: '01/18/2021',
@@ -27,6 +29,15 @@ class App extends Component {
     newUser.userName = logInInfo.userName
     this.setState({currentUser: newUser})
   }
+
+  componentDidMount = () => {
+    this.setState({
+      accountCredits: this.state.accountCredits,
+      accountDebits: this.state.accountDebits
+    })
+  }
+
+  
 
   render() {
 
@@ -52,6 +63,7 @@ class App extends Component {
 
     const DebitsListComponent = () => (
         <DebitsList
+          DebitAmount = {this.state.DebitAmount}
           accountBalance={this.state.accountCredits-this.state.accountDebits}
           accountDebits={this.state.accountDebits} 
           accountCredits={this.state.accountCredits}
@@ -60,6 +72,7 @@ class App extends Component {
 
     const CreditsListComponent = () => (
         <CreditsList
+          CreditAmount = {this.state.CreditAmount}
           accountBalance={this.state.accountCredits-this.state.accountDebits}
           accountDebits={this.state.accountDebits} 
           accountCredits={this.state.accountCredits}
